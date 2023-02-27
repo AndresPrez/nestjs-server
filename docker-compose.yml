@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    image: app-dev:latest
+    init: true
+    build:
+      context: .
+      target: app-dev
+      dockerfile: ./Dockerfile
+    command: sh -c "yarn db:migrate && yarn start"
+    # command: sh -c "yarn db:migrate"
+    # command: sh -c "bash"
+    # tty: true
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://admin:admin@db:5432/database
+    volumes:
+      - .:/usr/src/app
+      # This adds an anonymous volume for node_modules, because some node module installs are host specific like bcrypt.
+      # NOTE: doing this means that any node module updates done from outside the container will have no effect in the
+      # container's node modules.
+      - /usr/src/app/node_modules
+    networks: [app-net]
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:14-alpine
+    init: true
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: database
+    networks:
+      - app-net
+networks:
+  app-net:

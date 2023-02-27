@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
+    "esModuleInterop": true,
+    "target": "es6" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */,
+    "noImplicitAny": true,
+    "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "rootDir": "./src",
+    // "allowJs": true,
+    // "rootDirs": ["src/app", "src/auth", "src/user"],
+    "baseUrl": ".",
+    "paths": {
+      // "*": ["node_modules/*"],
+      "src/*": [
+        "src/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ]
+    },
+    "typeRoots": [
+      "./typings",
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

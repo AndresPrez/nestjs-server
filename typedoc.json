@@ -1,0 +1,6 @@
+{
+  "out": "docs",
+  "exclude": [
+    "**/*others.ts"
+  ]
+}
