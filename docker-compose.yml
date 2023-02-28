@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   app:
@@ -24,8 +24,10 @@ services:
       # container's node modules.
       - /usr/src/app/node_modules
     networks: [app-net]
+    # Depends on the 'db' service to be ready  by checking its healthcheck condition.
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     container_name: db
     image: postgres:14-alpine
@@ -35,6 +37,13 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: database
+    # We need a healthcheck for the database in order for the 'app' service to
+    # know when to start.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d database"]
+      interval: 1s
+      timeout: 1s
+      retries: 5
     networks:
       - app-net
 networks:
